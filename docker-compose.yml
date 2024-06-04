@@ -1,0 +1,109 @@
+version: '3.7'
+
+services:
+  mybootnode:
+    hostname: mybootnode
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    ports:
+      - "30301:30301"  # Bootnode communication port
+      - "8545:8545"    # HTTP-RPC 
+      - "8546:8546"    # WebSockets-RPC
+    networks:
+      priv-eth-net:
+
+  miner-1:
+    hostname: miner-1
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command: --bootnodes="enode://2ca3d6baa53a80a1fe375969f7724597caafaa592569a6eb2ed048bf0666ddbff19f37afc9e6e6833e65fd8f577e39458e6a45b238d4017031e7231f1a6e141a@mybootnode:30301" --mine --miner.threads=1 --networkid=${NETWORK_ID} --netrestrict="172.16.254.0/28" --http --http.addr "0.0.0.0" --http.port 8555 --http.corsdomain "*" --http.api "admin,eth,net,web3,personal,miner" --ws --ws.addr "0.0.0.0" --ws.port 8556 --ws.origins "*" --ws.api "admin,eth,net,web3,personal,miner"
+    ports:
+      - "30303:30303"
+      - "30303:30303/udp"
+      - "8555:8555"
+      - "8556:8556"
+    networks:
+      priv-eth-net:
+
+  miner-2:
+    hostname: miner-2
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command: --bootnodes="enode://2ca3d6baa53a80a1fe375969f7724597caafaa592569a6eb2ed048bf0666ddbff19f37afc9e6e6833e65fd8f577e39458e6a45b238d4017031e7231f1a6e141a@mybootnode:30301" --mine --miner.threads=1 --networkid=${NETWORK_ID} --netrestrict="172.16.254.0/28" --http --http.addr "0.0.0.0" --http.port 8557 --http.corsdomain "*" --http.api "admin,eth,net,web3,personal,miner" --ws --ws.addr "0.0.0.0" --ws.port 8558 --ws.origins "*" --ws.api "admin,eth,net,web3,personal,miner"
+    ports:
+      - "30304:30304"
+      - "30304:30304/udp"
+      - "8557:8557"
+      - "8558:8558"
+    networks:
+      priv-eth-net:
+
+  miner-3:
+    hostname: miner-3
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command: --bootnodes="enode://2ca3d6baa53a80a1fe375969f7724597caafaa592569a6eb2ed048bf0666ddbff19f37afc9e6e6833e65fd8f577e39458e6a45b238d4017031e7231f1a6e141a@mybootnode:30301" --mine --miner.threads=1 --networkid=${NETWORK_ID} --netrestrict="172.16.254.0/28" --http --http.addr "0.0.0.0" --http.port 8559 --http.corsdomain "*" --http.api "admin,eth,net,web3,personal,miner" --ws --ws.addr "0.0.0.0" --ws.port 8560 --ws.origins "*" --ws.api "admin,eth,net,web3,personal,miner"
+    ports:
+      - "30305:30305"
+      - "30305:30305/udp"
+      - "8559:8559"
+      - "8560:8560"
+    networks:
+      priv-eth-net:
+
+  miner-4:
+    hostname: miner-4
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command: --bootnodes="enode://2ca3d6baa53a80a1fe375969f7724597caafaa592569a6eb2ed048bf0666ddbff19f37afc9e6e6833e65fd8f577e39458e6a45b238d4017031e7231f1a6e141a@mybootnode:30301" --mine --miner.threads=1 --networkid=${NETWORK_ID} --netrestrict="172.16.254.0/28" --http --http.addr "0.0.0.0" --http.port 8561 --http.corsdomain "*" --http.api "admin,eth,net,web3,personal,miner" --ws --ws.addr "0.0.0.0" --ws.port 8562 --ws.origins "*" --ws.api "admin,eth,net,web3,personal,miner"
+    ports:
+      - "30306:30306"
+      - "30306:30306/udp"
+      - "8561:8561"
+      - "8562:8562"
+    networks:
+      priv-eth-net:
+
+  miner-5:
+    hostname: miner-5
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - ACCOUNT_PASSWORD=${ACCOUNT_PASSWORD}
+    command: --bootnodes="enode://2ca3d6baa53a80a1fe375969f7724597caafaa592569a6eb2ed048bf0666ddbff19f37afc9e6e6833e65fd8f577e39458e6a45b238d4017031e7231f1a6e141a@mybootnode:30301" --mine --miner.threads=1 --networkid=${NETWORK_ID} --netrestrict="172.16.254.0/28" --http --http.addr "0.0.0.0" --http.port 8563 --http.corsdomain "*" --http.api "admin,eth,net,web3,personal,miner" --ws --ws.addr "0.0.0.0" --ws.port 8564 --ws.origins "*" --ws.api "admin,eth,net,web3,personal,miner"
+    ports:
+      - "30307:30307"
+      - "30307:30307/udp"
+      - "8563:8563"
+      - "8564:8564"
+    networks:
+      priv-eth-net:
+
+networks:
+  priv-eth-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.254.0/28
